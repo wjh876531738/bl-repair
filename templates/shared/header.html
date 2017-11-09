@@ -1,0 +1,36 @@
+{% load bootstrap3 %}
+
+<!-- 头部布局Header -->
+<div class='header' style="background: #324157; margin-bottom: 3rem; font-size: 1.8rem">
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    {% bootstrap_icon 'align-justify' %}
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="" class="navbar-brand" style="color: #fff">BL-Repair</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'article_index' %}" style="color: #fff">电脑小技巧</a></li>
+                    <li><a href="{% url 'report_new' %}" style="color: #fff">报修电脑故障</a></li>
+                    <li><a href="" style="color: #fff">电脑报障记录</a></li>
+                    <li><a href="" style="color: #fff">关于</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <div class="banner container" style="margin: 0 auto; padding: 4rem 0">
+        <div class="inner">
+            <h1 style="color: #fff">北理报障平台</h1>
+        </div>
+    </div>
+
+</div>

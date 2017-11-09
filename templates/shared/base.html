@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' >
+    <title>{% block title %}Fsociety{% endblock %}</title>
+    <script src='/static/js/jquery.min.js'></script>
+
+    <!-- 加载bootstrap -->
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <!-- 加载css, js -->
+    {% block load_css_js %}{% endblock %}
+    <link rel="stylesheet" href="/static/css/reset.css">
+</head>
+<body>
+
+    {% block header %}
+        {% include 'shared/header.html' %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+    
+    {% block footer %}
+        {% include 'shared/footer.html' %}
+    {% endblock %}
+
+</body>
+</html>

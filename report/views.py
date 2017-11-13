@@ -1,17 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from django.utils.six import BytesIO
 
 from .forms import ComputerProblemFrom
 from .models import Computer, Reporter, ComputerProblem
 
-import qrcode, os
+from rest_framework import viewsets
+from .serializers import ComputerProblemSerializer, ComputerSerializer, ReporterSerializer
+
+import qrcode, os, json
 import pandas as pd
 
 # Create your views here.
 HOST = 'http://192.168.43.62:8000'
 
+# 报障表单的提交处理
 def new(request):
     if request.method == 'POST':
         computer_problem_form = ComputerProblemFrom(request.POST)
@@ -79,3 +83,15 @@ def generate_qrcode(request):
 
     response = HttpResponse(image_stream, content_type="image/png")
     return response
+
+class ComputerProblemViewSet(viewsets.ModelViewSet):
+    queryset = ComputerProblem.objects.all()
+    serializer_class = ComputerProblemSerializer
+
+class ComputerViewSet(viewsets.ModelViewSet):
+    queryset = Computer.objects.all()
+    serializer_class = ComputerSerializer
+
+class ReporterViewSet(viewsets.ModelViewSet):
+    queryset = Reporter.objects.all()
+    serializer_class = ReporterSerializer

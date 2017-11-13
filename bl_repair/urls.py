@@ -13,18 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 
 from django.views.generic import TemplateView
 
+from rest_framework import routers
+
 from report import views as report_views
 from blog import views as blog_views
+
+# Router Api 
+router = routers.DefaultRouter()
+router.register(r'computer_problems', report_views.ComputerProblemViewSet)
+router.register(r'computers', report_views.ComputerViewSet)
+router.register(r'reporters', report_views.ReporterViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^$', blog_views.index, name='root'),
+    url(r'^$', report_views.new, name='root'),
 
     # Repair
     url(r'^report/new', report_views.new, name='report_new'),
@@ -33,6 +41,10 @@ urlpatterns = [
     # Blog
     url(r'^articles', blog_views.index, name='article_index'),
     url(r'^article/(\d+)$', blog_views.show, name='article_show'),
+
+    # Api
+    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^api/v1/', include(router.urls)),
 
     # Vue
     url(r'^vue$', TemplateView.as_view(template_name='index.html')),

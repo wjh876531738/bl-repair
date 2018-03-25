@@ -1,0 +1,36 @@
+{% extends 'shared/base.html' %}
+
+{% block title %} 报障记录 {% endblock %}
+
+{% block content %}
+
+<div class="main-content col-md-8 col-md-offset-2" style="margin-top: 3rem;>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+        <th>#</th>
+        <th>故障描述</th>
+        <th>故障类型</th>
+        <th>情况</th>
+        <th>处理进度</th>
+        <th>报障时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in computer_problems %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.problem_desc }}</td>
+          <td>{{ i.problem_type }}</td>
+          <td>{{ i.problem_situation }}</td>
+          <td>{{ i.problem_status }}</td>
+          <td>{{ i.report_time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

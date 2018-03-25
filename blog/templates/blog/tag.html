@@ -1,0 +1,19 @@
+{% extends 'shared/base.html' %}
+
+{% block title %} Blogs {% endblock %}
+
+{% block load_css_js %}
+<link rel="stylesheet" href="/static/css/blog.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="col-md-8 col-md-offset-2">
+    <h1 style="margin-bottom: 2rem">{{ tag.tag_name }}</h1>
+    {% for i in articles %}
+    <h4><a href="{% url 'article_show' i.id %}">{{ i.article_title }}<span class="pull-right">{{ i.created_at }}</span></a></h3>
+    
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

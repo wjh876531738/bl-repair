@@ -1,6 +1,6 @@
 {% extends 'shared/base.html' %}
 
-{% block title %} Blogs {% endblock %}
+{% block title %} 自助维修 {% endblock %}
 
 {% block load_css_js %}
 <link rel="stylesheet" href="/static/css/blog.css">
@@ -10,56 +10,56 @@
 
 <!-- Main content -->
 <div class="container main-content">
-    <!-- Article list -->
-    <div class="article-list col-md-7 col-md-offset-1 col-sm-12">
+  <!-- Article list -->
+  <div class="article-list col-md-7 col-md-offset-1 col-sm-12">
 
-        {% for article in articles %}
+    {% for article in articles %}
 
-            <div class="article-info">
-                <h1 class="article-title">
-                    <a href="{% url 'article_show' article.id %}">{{ article.article_title }}</a>
-                </h1>
-                <ul class="tag-list">
-                    {% for tag in article.tags.all %}
-                        <li><a href="#">{{tag.tag_name}}</a></li>
-                    {% endfor %}
-                </ul>
-                <div class="clearfix"></div>
-                <p class="article-content">
-                    {{ article.article_desc }}
-                </p>
-                <!--<span class="pull-right">2015-04-03</span>-->
-                <div class="clearfix"></div>
-                <hr>
-            </div>
-
-        {% endfor  %}
-
+    <div class="article-info">
+      <h1 class="article-title">
+        <a href="{% url 'article_show' article.id %}">{{ article.article_title }}</a>
+      </h1>
+      <ul class="tag-list">
+        {% for tag in article.tags.all %}
+        <li><a href="{% url 'article_tag' tag.id %}">{{tag.tag_name}}</a></li>
+        {% endfor %}
+      </ul>
+      <div class="clearfix"></div>
+      <p class="article-content">
+        {{ article.article_desc }}
+      </p>
+      <!--<span class="pull-right">2015-04-03</span>-->
+      <div class="clearfix"></div>
+      <hr>
     </div>
 
-    <!-- Sidebar -->
-    <div class="col-md-4 hidden-sm hidden-xs">
-        <div class="sidebar">
-            <div class="hot-tags">
-                <hr>
-                <h1>问题分类</h1>
-                <ul class="tag-list">
-                    {% for tag in tags %}
-                        <li><a href="#">{{ tag.tag_name }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="clearfix"></div>
-            <div class="hot-articles">
-                <hr>
-                <h1>常见问题</h1>
-                <ul class="articles-list">
-                    <li><a href="#">【声音】电脑没有声音修复</a></li>
-                    <li><a href="#">【网络】网络连接失败</a></li>
-                </ul>
-            </div>
-        </div>
+    {% endfor  %}
+
+  </div>
+
+  <!-- Sidebar -->
+  <div class="col-md-4 hidden-sm hidden-xs">
+    <div class="sidebar">
+      <div class="hot-tags">
+        <hr>
+        <h1>问题分类</h1>
+        <ul class="tag-list">
+          {% for tag in tags %}
+          <li><a href="{% url 'article_tag' tag.id %}">{{ tag.tag_name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+      <div class="hot-articles">
+        <hr>
+        <h1>常见问题</h1>
+        <ul class="articles-list">
+          <li><a href="#">【声音】电脑没有声音修复</a></li>
+          <li><a href="#">【网络】网络连接失败</a></li>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>
 
 {% endblock %}

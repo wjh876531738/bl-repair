@@ -19,15 +19,19 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
 
 from report import views as report_views
 from blog import views as blog_views
 
-# Router Api 
+
+# Router Api
 router = routers.DefaultRouter()
-router.register(r'computer_problems', report_views.ComputerProblemViewSet)
-router.register(r'computers', report_views.ComputerViewSet)
-router.register(r'reporters', report_views.ReporterViewSet)
+# router.register(r'computer_problems', report_views.ComputerProblemViewSet)
+# router.register(r'computers', report_views.ComputerViewSet)
+# router.register(r'reporters', report_views.ReporterViewSet)
+# router.register(r'tags', blog_views.TagViewSet)
+# router.register(r'articles', blog_views.ArticleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,16 +39,30 @@ urlpatterns = [
     url(r'^$', report_views.new, name='root'),
 
     # Repair
+    url(r'^report/index', report_views.index, name='report_index'),
+    url(r'^report/about', report_views.about, name='report_about'),
     url(r'^report/new', report_views.new, name='report_new'),
-    url(r'^report/qrcode$', report_views.generate_qrcode, name='report_qrcode'),
+    url(r'^api/v1/qrcode$', report_views.generate_qrcode,
+        name='report_qrcode'),
+
+    url(r'^api/v1/computer_problems', report_views.ComputerProblemList.as_view(), name='api_computer_problems'),
+    url(r'^api/v1/computer_problem/(?P<pk>[0-9]+)$', report_views.ComputerProblemDetail.as_view(), name='api_computer_problem'),
+
+    url(r'^api/v1/computers', report_views.ComputerList.as_view(), name='api_computers'),
+    url(r'^api/v1/computer/(?P<pk>[0-9]+)$', report_views.ComputerDetail.as_view(), name='api_computer'),
+
+    url(r'^api/v1/reporters', report_views.ReporterList.as_view(), name='api_reporters'),
+    url(r'^api/v1/reporter/(?P<pk>[0-9]+)$', report_views.ReporterDetail.as_view(), name='api_reporter'),
 
     # Blog
     url(r'^articles', blog_views.index, name='article_index'),
     url(r'^article/(\d+)$', blog_views.show, name='article_show'),
+    url(r'^article/tag/(\d+)$', blog_views.tag, name='article_tag'),
 
     # Api
     url(r'^api-auth/', include('rest_framework.urls')),
-    url(r'^api/v1/', include(router.urls)),
+    url(r'^api-docs/', include_docs_urls(title="北理报障系统")),
+    # url(r'^api/v1/', include(router.urls)),
 
     # Vue
     url(r'^vue$', TemplateView.as_view(template_name='index.html')),

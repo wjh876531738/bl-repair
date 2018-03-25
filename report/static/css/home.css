@@ -1,0 +1,41 @@
+.feature {
+	text-align: center;
+	background-color: #fafafa;
+	// background-color: #bcd5d1;
+	padding: 5rem 0;
+}
+.feature .col-md-4 {
+	margin: 5rem 0;
+}
+.feature p {
+	font-size: 1.8rem;
+	line-height: 2.5rem;
+}
+
+.feature-box {
+	padding: 6rem 0;
+	text-align: center;
+	border-bottom: 0.1rem solid #eeeeee;
+}
+.feature-box .feature-text {
+	padding: 0 1rem 3rem;
+}
+.feature-box p {
+	font-size: 1.8rem;
+	line-height: 2.5rem;
+}
+.feature-box .feature-img {
+	border-radius: 0.5rem;
+	padding: 1rem;
+}
+.feature-box .feature-img img {
+	max-width: 100%;
+}
+.feature-bottom {
+	background-color: #5a5c51;
+	background-color: #bcd5d1;
+}
+
+.join-form {
+    margin: 3rem;
+}

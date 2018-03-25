@@ -1,64 +1,67 @@
-// Article list
 .main-content {
-	padding-top: 4rem;
+    padding-top: 4rem;
+    min-height: 45rem;
 }
 .main-content img {
     max-width: 100%;
 }
 .article-info hr {
-	margin: 3.2rem 0;
+    margin: 3.2rem 0;
 }
 .article-title {
-	margin: 0;
-	padding: 0 0 1.6rem 0;
-	font-size: 2.8rem;
-	color: #333333;
+    margin: 0;
+    padding: 0 0 1.6rem 0;
+    font-size: 2.8rem;
+    color: #333333;
 }
 .article-title a {
-	color: #333333;
+    color: #333333;
 }
 .article-title a:hover {
 }
 .article-content {
-	padding: 1.4rem 0;
-	line-height: 2.3rem;
-	text-indent: 2rem;
-	font-size: 1.5rem;
-	color: #828e98;
+    padding: 1.4rem 0;
+    line-height: 2.3rem;
+    text-indent: 2rem;
+    font-size: 1.5rem;
+    color: #828e98;
+}
+.comment {
+    margin: 10rem 0;
 }
 
 // Sidebar
 .sidebar {
-	padding: 0 5rem;
+    padding: 0 5rem;
 }
 .sidebar hr {
-	margin: 0 0 2rem 0;
+    margin: 0 0 2rem 0;
 }
 .sidebar h1 {
-	margin: 0;
-	font-size: 2rem;
-	color: #757575;
-	font-weight: bold;
+    margin: 0;
+    font-size: 2rem;
+    color: #757575;
+    font-weight: bold;
 }
 .hot-tags .tag-list {
-	margin-top: 1.2rem;
+    margin-top: 1.2rem;
 }
 .hot-articles {
-	margin-top: 3rem;
+    margin-top: 3rem;
 }
 .hot-articles .articles-list {
-	margin-top: 1.2rem;
-	list-style: none;
-	padding: 0;
+    margin-top: 1.2rem;
+    list-style: none;
+    padding: 0;
 }
 .hot-articles .articles-list li {
-	padding: 0.8rem 0;
-	border-top: 0.1rem solid #eeeeee;
-	border-bottom: 0.1rem solid #eeeeee;
+    padding: 0.8rem 0;
+    border-top: 0.1rem solid #eeeeee;
+    border-bottom: 0.1rem solid #eeeeee;
 }
 .hot-articles .articles-list a {
-	text-decoration: none;
-	color: #757575;
+    text-decoration: none;
+    color: #757575;
 }
 
 .tag-list {

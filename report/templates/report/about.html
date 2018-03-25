@@ -1,0 +1,45 @@
+{% extends 'shared/base.html'%}
+
+{% block title %} 关于 {% endblock %}
+
+{% block load_css_js %} 
+<link rel="stylesheet" href="/static/css/home.css">
+{% endblock %}
+
+{% block content %} 
+
+<section>
+    <div class="feature-box container">
+        <div class="col-md-6 feature-text">
+            <h1>便捷</h1>
+            <p>协会内部成员涉及python、ruby、golang等多种计算机编程语言开发，协会开发团队亦创立了自己的团队（GYW）并驻足北理工创业梦工厂。历届协会都会指派开发团队参加省市级、国家级比赛，曾囊括2014粤港澳大学生移动互联网创新设计大赛一等奖；2015年第四届中国创新创业大赛粤港澳赛暨第二届两岸四地大学生创新创业大赛决赛等诸多奖项，同时也为企业输送了大批应用型人才。协会现在所钻研的项目：基于Wi-Fi无线环境下人体动作识别、基于智能路由器下利用html5微网站服务订阅、基于云计划的可穿戴设备信息交互分析决策系统。</p>
+        </div>
+        <div class="col-md-6 feature-img">
+            <img src="/static/image/vue.png" alt="">
+        </div>
+    </div>
+    <div class="feature-box container">
+        <div class="col-md-6 col-md-push-6 feature-text">
+            <h1>实时跟进进度</h1>
+            <p>协会内部成员涉及python、ruby、golang等多种计算机编程语言开发，协会开发团队亦创立了自己的团队（GYW）并驻足北理工创业梦工厂。历届协会都会指派开发团队参加省市级、国家级比赛，曾囊括2014粤港澳大学生移动互联网创新设计大赛一等奖；2015年第四届中国创新创业大赛粤港澳赛暨第二届两岸四地大学生创新创业大赛决赛等诸多奖项，同时也为企业输送了大批应用型人才。协会现在所钻研的项目：基于Wi-Fi无线环境下人体动作识别、基于智能路由器下利用html5微网站服务订阅、基于云计划的可穿戴设备信息交互分析决策系统。</p>
+        </div>
+        <div class="col-md-6 col-md-pull-6 feature-img">
+            <img src="/static/image/tensorflow_clean.jpg" alt="">
+        </div>
+    </div>
+    <div class="feature-box container">
+        <div class="col-md-6 feature-text">
+            <h1>自助维修</h1>
+            <p>近期成功举办了《高性能云查询系统的性能优化》、《产品运营》、《Polymer简述以及谷歌最近的几件事儿》等技术分享会，主讲人包括奇虎360企业安全高级架构师、WPS运营经理、金山运营总监、腾讯工程师等业界人士。同时还会不定期邀请openresty社区和珠海GDG社区分享项目开发经验。协会目的在于能够将最新的技术同大家分享，并且能够开源往届师兄开发的一些项目、API文档和大家一同学习，平时也可作为学术交流、答疑的群体。为广大移动开发的兴趣爱好者提供良好的环境和开发团队。</p>
+        </div>
+        <div class="col-md-6 feature-img">
+            <img src="/static/image/android.jpg" alt="">
+        </div>
+    </div>
+</section>
+
+<div class="feature feature-bottom">
+    <h1>谢谢您的支持</h1>
+</div>
+
+{% endblock %}

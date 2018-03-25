@@ -49,10 +49,8 @@ urlpatterns = [
     url(r'^api/v1/computer_problem/(?P<pk>[0-9]+)$', report_views.ComputerProblemDetail.as_view(), name='api_computer_problem'),
 
     url(r'^api/v1/computers', report_views.ComputerList.as_view(), name='api_computers'),
+    url(r'^api/v1/computer_classes', report_views.ComputerClassList.as_view(), name='api_computer_classes'),
     url(r'^api/v1/computer/(?P<pk>[0-9]+)$', report_views.ComputerDetail.as_view(), name='api_computer'),
-
-    url(r'^api/v1/reporters', report_views.ReporterList.as_view(), name='api_reporters'),
-    url(r'^api/v1/reporter/(?P<pk>[0-9]+)$', report_views.ReporterDetail.as_view(), name='api_reporter'),
 
     # Blog
     url(r'^articles', blog_views.index, name='article_index'),

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 
 from django.utils.six import BytesIO
 
@@ -11,10 +11,11 @@ from .models import Reporter
 from .models import ComputerProblem
 
 from rest_framework import generics
+from rest_framework.response import Response
 
 from .serializers import ComputerProblemSerializer
 from .serializers import ComputerSerializer
-from .serializers import ReporterSerializer
+from .serializers import ComputerClassSerializer
 
 import qrcode
 import hashlib
@@ -74,7 +75,7 @@ def new(request):
 
             return render(request, 'report/new.html', {
                 'computer_problem_form': computer_problem_form,
-                'msg': '谢谢您的上报, 我们会尽快维修的.'})
+                'msg': '谢谢您的上报, 我们会尽快维修.'})
         else:
             computer_problem_form = ComputerProblemFrom()
             return render(request, 'report/new.html', {
@@ -189,32 +190,47 @@ def generate_qrcode(request):
     # image_stream = buf.getvalue()
 
 
+# Computer Problem List, Create
 class ComputerProblemList(generics.ListCreateAPIView):
     queryset = ComputerProblem.objects.all()
     serializer_class = ComputerProblemSerializer
 
 
+# Computer Problem Retrieve, Update, Destroy
 class ComputerProblemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ComputerProblem.objects.all()
     serializer_class = ComputerProblemSerializer
 
 
-class ComputerList(generics.ListCreateAPIView):
+# Computer List
+class ComputerList(generics.ListAPIView):
+    queryset = Computer.objects.all()
+    serializer_class = ComputerSerializer
+
+    def list(self, request, *args, **kwargs):
+        # Return all computer data with `class, no` fields if request has param `all` equal to 1
+        if 'all' in request.GET and request.GET.get('all') == '1':
+            queryset = self.get_queryset().values('computer_class', 'computer_no')
+            return Response(queryset)
+
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+# Computer Retrieve
+class ComputerDetail(generics.RetrieveAPIView):
     queryset = Computer.objects.all()
     serializer_class = ComputerSerializer
 
 
-class ComputerDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Computer.objects.all()
-    serializer_class = ComputerSerializer
-
-
-class ReporterList(generics.ListCreateAPIView):
-    queryset = Reporter.objects.all()
-    serializer_class = ReporterSerializer
-
-
-class ReporterDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Reporter.objects.all()
-    serializer_class = ReporterSerializer
-
+# Computer Class List
+class ComputerClassList(generics.ListAPIView):
+    queryset = Computer.objects.values('computer_class').distinct()
+    serializer_class = ComputerClassSerializer
+    pagination_class = None

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.http import FileResponse
 
 from django.utils.six import BytesIO
 
@@ -108,7 +109,7 @@ def generate_qrcode(request):
     if not os.path.exists(os.path.join(BASE_DIR, 'media/qrcode/cache')):
         os.mkdir(os.path.join(BASE_DIR, 'media/qrcode/cache'))
 
-    server_host = 'http://192.168.199.197'
+    server_host = 'http://localhost'
 
     # Validate params
     # 1. 根据指定电脑生成一张二维码
@@ -128,7 +129,14 @@ def generate_qrcode(request):
                             server_host, computer.computer_class, computer.computer_no))
                 with open(os.path.join(BASE_DIR, 'media/qrcode', filename), 'wb+') as f:
                     img.save(f)
-            return JsonResponse({'msg': 'OK', 'path': filename})
+
+            # Marked! 不能通过 with 打开文件，否则 FileResponse 会抛出 ValueError: read of closed file
+            f = open(os.path.join(BASE_DIR, 'media/qrcode', filename), 'rb')
+
+            response = FileResponse(f)
+            response['Content-Type'] = 'application/octet-stream'
+            response['Content-Disposition'] = 'attachment;filename="%s"' % (filename,)
+            return response
         else:
             return JsonResponse({'msg': '找不到指定的电脑，请检查电脑所在课室和编号是否正确'}, status=400)
 
@@ -160,7 +168,13 @@ def generate_qrcode(request):
 
                     # 将二维码放进压缩文件包
                     zip_f.write(os.path.join(BASE_DIR, 'media/qrcode', filename), filename)
-                return JsonResponse({'msg': 'OK', 'path': os.path.join(server_host, 'media/qrcode/cache/%s.zip' % computer_class)})
+
+                f = open(os.path.join(BASE_DIR, 'media/qrcode/cache',
+                        '%s.zip' % computer_class), 'rb')
+                response = FileResponse(f)
+                response['Content-Type'] = 'application/octet-stream'
+                response['Content-Disposition'] = 'attachment;filename="%s.zip"' % (computer_class,)
+                return response
             except Exception as e:
                 print(e)
             finally:

@@ -51,6 +51,8 @@ urlpatterns = [
     url(r'^api/v1/computers', report_views.ComputerList.as_view(), name='api_computers'),
     url(r'^api/v1/computer_classes', report_views.ComputerClassList.as_view(), name='api_computer_classes'),
     url(r'^api/v1/computer/(?P<pk>[0-9]+)$', report_views.ComputerDetail.as_view(), name='api_computer'),
+    url(r'^api/v1/reminds', report_views.RemindList.as_view(), name='api_reminds'),
+    url(r'^api/v1/remind/(?P<pk>[0-9]+)$', report_views.RemindDetail.as_view(), name='api_remind'),
 
     # Blog
     url(r'^articles', blog_views.index, name='article_index'),

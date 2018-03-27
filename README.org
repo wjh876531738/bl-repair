@@ -11,5 +11,5 @@ Vue + Django 前后端分离架构
 
 ** TO-DO
 
-    - 邮箱提醒，配置邮箱提醒（暂时不设置针对不同课室不同提醒）
     - Computer, ComputerProblem API 的 filter, order
+    - 字段检查改成 validate 的形式，而不是提交后才提示

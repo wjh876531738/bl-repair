@@ -20,7 +20,7 @@ class Remind(models.Model):
     remind_email = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.computer + self.remind_email
+        return self.remind_email
 
 
 # 电脑

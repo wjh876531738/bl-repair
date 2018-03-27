@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ComputerProblem, Computer, Reporter
+from .models import ComputerProblem, Computer, Reporter, Remind
 
 class ComputerProblemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,4 +24,11 @@ class ReporterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reporter
         # fields = ('reporter_ip', 'computer_problems')
+        fields = '__all__'
+
+
+class RemindSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Remind
+        ordering = 'id'
         fields = '__all__'

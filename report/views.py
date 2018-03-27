@@ -10,6 +10,7 @@ from .forms import ComputerProblemFrom
 from .models import Computer
 from .models import Reporter
 from .models import ComputerProblem
+from .models import Remind
 
 from rest_framework import generics
 from rest_framework.response import Response
@@ -17,6 +18,7 @@ from rest_framework.response import Response
 from .serializers import ComputerProblemSerializer
 from .serializers import ComputerSerializer
 from .serializers import ComputerClassSerializer
+from .serializers import RemindSerializer
 
 import qrcode
 import hashlib
@@ -247,4 +249,15 @@ class ComputerDetail(generics.RetrieveAPIView):
 class ComputerClassList(generics.ListAPIView):
     queryset = Computer.objects.values('computer_class').distinct()
     serializer_class = ComputerClassSerializer
+    pagination_class = None
+
+
+class RemindList(generics.ListCreateAPIView):
+    queryset = Remind.objects.all()
+    serializer_class = RemindSerializer
+
+
+class RemindDetail(generics.RetrieveUpdateAPIView):
+    queryset = Remind.objects.all()
+    serializer_class = RemindSerializer
     pagination_class = None

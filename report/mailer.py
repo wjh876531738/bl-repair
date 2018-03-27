@@ -28,12 +28,12 @@ def send_mail(receivers, send_from, send_to, subject, content, content_type='pla
         print(e)
 
 
-def send():
-    receivers = ['876531738@qq.com']
+def send(receivers, content):
+    receivers = [receivers]
     send_from = '北理报障平台'
     send_to = 'XXX管理员'
-    subject = '您有新的报障信息'
-    content = '<h1>您有新的报障信息</h1>'
+    subject = '您有新的报障信息，请及时处理'
+    content = content
 
     send_mail(
         receivers, send_from, send_to, subject, content, content_type='html')

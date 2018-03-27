@@ -7,10 +7,13 @@ from django.utils.six import BytesIO
 from bl_repair.settings import BASE_DIR
 
 from .forms import ComputerProblemFrom
+
 from .models import Computer
 from .models import Reporter
 from .models import ComputerProblem
 from .models import Remind
+from .models import COMPUTER_PROBLEM_TYPE_CHOICES
+from .models import COMPUTER_PROBLEM_SITUATION_CHOICES
 
 from rest_framework import generics
 from rest_framework.response import Response
@@ -64,6 +67,16 @@ def new(request):
             computer.report_count = computer.report_count + 1
             computer.save()
 
+            if len(ComputerProblem.objects.filter(computer=computer)) > 0:  
+                print('Has')
+                return render(request, 'report/new.html', {
+                    'computer_problem_form': computer_problem_form,
+                    'msg': '谢谢您的上报, 该故障已有人上报，请勿重复报障',
+                    'msg_type': 'error'
+                    })
+
+            print('No')
+
             ComputerProblem.objects.create(
                 reporter=reporter,
                 computer=computer,
@@ -74,7 +87,17 @@ def new(request):
 
             computer_problem_form = ComputerProblemFrom()
 
-            # send()
+            remind = Remind.objects.get(id=1)
+
+            if remind:
+                msg = '<h1>%s %s 电脑发生故障</h1> </br> 问题类型：%s </br> 故障程度：%s </br> 故障情况：%s </br> </br> 请及时处理' % (
+                        computer.computer_class,
+                        computer.computer_no,
+                        COMPUTER_PROBLEM_TYPE_CHOICES[int(problem_type)][1],
+                        COMPUTER_PROBLEM_SITUATION_CHOICES[int(problem_situation)][1],
+                        problem_desc,
+                        )
+                send(remind.remind_email, msg)
 
             return render(request, 'report/new.html', {
                 'computer_problem_form': computer_problem_form,
@@ -260,4 +283,3 @@ class RemindList(generics.ListCreateAPIView):
 class RemindDetail(generics.RetrieveUpdateAPIView):
     queryset = Remind.objects.all()
     serializer_class = RemindSerializer
-    pagination_class = None

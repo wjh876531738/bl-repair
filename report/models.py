@@ -3,8 +3,8 @@ from django.db import models
 COMPUTER_PROBLEM_TYPE_CHOICES = (
     (0, '显示器'), (1, '主机'), (2, '网络'), (3, '键鼠'), (4, '其他'))
 COMPUTER_PROBLEM_SITUATION_CHOICES = (
-    (0, '一般'), (1, '严重'), (2, '紧急'))
-COMPUTER_PROBLEM_STATUS_CHOICES = ((0, '刚报修'), (1, '已维修'), (2, '待处理'))
+    (0, '一般'), (1, '紧急'), (2, '严重'))
+COMPUTER_PROBLEM_STATUS_CHOICES = ((0, '刚报修'), (1, '开始维修'), (2, '送修'), (3, '已修好'))
 
 
 # 报障提交者
@@ -26,13 +26,13 @@ class Remind(models.Model):
 # 电脑
 class Computer(models.Model):
     computer_class = models.CharField(max_length=10)
-    computer_no = models.CharField(max_length=5)
+    computer_no = models.IntegerField(default=0)
     computer_ip = models.CharField(max_length=25, default='')
     report_count = models.IntegerField(default=0)
     # remind = models.ForeignKey(Remind)
 
     def __str__(self):
-        return self.computer_class + ' ' + self.computer_no
+        return self.computer_class + ' ' + str(self.computer_no)
 
 
 # 电脑问题

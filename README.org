@@ -11,5 +11,9 @@ Vue + Django 前后端分离架构
 
 ** TO-DO
 
-    - Computer, ComputerProblem API 的 filter, order
-    - 字段检查改成 validate 的形式，而不是提交后才提示
+    - 图表分析
+    - Computer, ComputerProblem API 的 order
+
+    - 维修状态的修改
+    - 电脑添加
+    - 二维码添加文字

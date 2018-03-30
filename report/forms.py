@@ -10,7 +10,7 @@ class ComputerProblemFrom(forms.Form):
     for i in computers:
         computer_choice.append((i.id, str(i)))
 
-    computer = forms.ChoiceField(choices=computer_choice, label='机房课室')
+    computer = forms.ChoiceField(choices=computer_choice, label='机房课室', disabled=True)
     problem_type = forms.ChoiceField(
         choices=COMPUTER_PROBLEM_TYPE_CHOICES, label='问题类型')
     problem_desc = forms.CharField(widget=forms.Textarea, label='问题描述')

@@ -18,6 +18,8 @@ from .models import COMPUTER_PROBLEM_SITUATION_CHOICES
 from rest_framework import generics
 from rest_framework.response import Response
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .serializers import ComputerProblemSerializer
 from .serializers import ComputerSerializer
 from .serializers import ComputerClassSerializer
@@ -47,12 +49,14 @@ def new(request):
     if request.method == 'POST':
         computer_problem_form = ComputerProblemFrom(request.POST)
 
+        # Validate form data
         if computer_problem_form.is_valid():
             computer_id = computer_problem_form.cleaned_data['computer']
             problem_type = computer_problem_form.cleaned_data['problem_type']
             problem_desc = computer_problem_form.cleaned_data['problem_desc']
             problem_situation = computer_problem_form.cleaned_data['problem_situation']
 
+            # Get user ip and save into reporter
             try:
                 real_ip = request.META['HTTP_X_FORWARDED_FOR']
             except KeyError:
@@ -62,21 +66,21 @@ def new(request):
                 request.META['REMOTE_ADDR'] = real_ip
 
             reporter = Reporter.objects.create(reporter_ip=real_ip)
-            # 报障次数 +1
+
+            # 报障次数 + 1
             computer = Computer.objects.get(id=computer_id)
             computer.report_count = computer.report_count + 1
             computer.save()
 
+            # Return msg if the computer has been reported
             if len(ComputerProblem.objects.filter(computer=computer)) > 0:  
-                print('Has')
                 return render(request, 'report/new.html', {
                     'computer_problem_form': computer_problem_form,
                     'msg': '谢谢您的上报, 该故障已有人上报，请勿重复报障',
                     'msg_type': 'error'
                     })
 
-            print('No')
-
+            # Update ComputerProblem
             ComputerProblem.objects.create(
                 reporter=reporter,
                 computer=computer,
@@ -87,6 +91,7 @@ def new(request):
 
             computer_problem_form = ComputerProblemFrom()
 
+            # Send email to the reminder
             remind = Remind.objects.get(id=1)
 
             if remind:
@@ -231,8 +236,23 @@ def generate_qrcode(request):
 
 # Computer Problem List, Create
 class ComputerProblemList(generics.ListCreateAPIView):
-    queryset = ComputerProblem.objects.all()
+    queryset = ComputerProblem.objects.all().order_by('-problem_situation', 'problem_status', '-report_time')
     serializer_class = ComputerProblemSerializer
+    filter_fields = (
+            'computer', 'problem_type', 'problem_desc',
+            'problem_situation', 'problem_status'
+            )
+
+    def list(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 # Computer Problem Retrieve, Update, Destroy
@@ -242,17 +262,21 @@ class ComputerProblemDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 # Computer List
-class ComputerList(generics.ListAPIView):
-    queryset = Computer.objects.all()
+class ComputerList(generics.ListCreateAPIView):
+    queryset = Computer.objects.all().order_by('computer_class', 'computer_no')
     serializer_class = ComputerSerializer
+    filter_fields = ('computer_class', 'computer_no')
 
+    # Rewrite the list method
     def list(self, request, *args, **kwargs):
         # Return all computer data with `class, no` fields if request has param `all` equal to 1
         if 'all' in request.GET and request.GET.get('all') == '1':
             queryset = self.get_queryset().values('computer_class', 'computer_no')
             return Response(queryset)
 
-        queryset = self.filter_queryset(self.get_queryset())
+            queryset = self.filter_queryset(self.get_queryset())
+        else:
+            queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
         if page is not None:

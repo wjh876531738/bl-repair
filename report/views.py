@@ -48,7 +48,6 @@ def about(request):
 # 报障表单的提交处理
 def new(request):
     if request.method == 'POST':
-        print(request.POST)
         computer_problem_form = ComputerProblemFrom(request.POST)
 
         # Validate form data

@@ -1,1 +1,9 @@
-/media/
+*.pyc
+*.swp
+*.lock
+*.log
+*.pid
+*.svn
+*.out
+/media/*
+/collected_static

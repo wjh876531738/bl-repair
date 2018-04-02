@@ -13,9 +13,9 @@
 {% load bootstrap_tags %}
 
 {% if msg and msg_type == 'error' %}
-<h1 style='text-align: center; color: red; font-size: 2.3rem'>{{ msg }}</h1>
+<h1 style='text-align: center; color: red; font-size: 2.3rem; width: 80%; margin: 0.67em auto;'>{{ msg }}</h1>
 {% elif msg %}
-<h1 style='text-align: center; color: green; font-size: 2.3rem'>{{ msg }}</h1>
+<h1 style='text-align: center; color: green; font-size: 2.3rem; width: 80%; margin: 0.67em auto;'>{{ msg }}</h1>
 {% endif %}
 
 <div class="container join-form">

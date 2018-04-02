@@ -11,7 +11,10 @@ Vue + Django 前后端分离架构
 
 ** TO-DO
 
-    - 图表分析
+    - 后台对接过滤接口
+    - ComputerProblem API 没有电脑号
     - Computer, ComputerProblem API 的 order
-
     - 维修状态的修改
+    - 邮箱问题的修复
+    - 后台登陆接入 JSON WEB TOKEN
+    - 图表分析

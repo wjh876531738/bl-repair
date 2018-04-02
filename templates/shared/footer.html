@@ -4,31 +4,31 @@
 <!--底部Footer-->
 <footer style="margin-top: 3rem;">
     <div class="container footer">
-        <p class="footerDescribe">Copyright © XR_HUI 2017<br/>Theme by Wjh</p>
+        <p class="footerDescribe">Copyright © XR_HUI 2017<br/>Theme by <a href="http://fsociety.ink">Wjh</a></p>
     </div>
 </footer>
 
 <!--滚到顶部按钮-->
-<a href="#top" id="toTop">
-    {% bootstrap_icon 'chevron-up' %}
-</a>
+<!--<a href="#top" id="toTop">-->
+    <!--{% bootstrap_icon 'chevron-up' %}-->
+<!--</a>-->
 
 <script>
-$(function () {
-    $("#toTop").hide();
-    $(function () {
-        $(window).scroll(function () {
-            if ($(window).scrollTop() > 100) {
-                $("#toTop").fadeIn(1500);
-            }
-            else {
-                $("#toTop").fadeOut(1000);
-            }
-        });
-        $("#toTop").click(function () {
-            $('body,html').animate({ scrollTop: 0 }, 1000);
-            return false;
-        });
-    });
-});
+// $(function () {
+//     $("#toTop").hide();
+//     $(function () {
+//         $(window).scroll(function () {
+//             if ($(window).scrollTop() > 100) {
+//                 $("#toTop").fadeIn(1500);
+//             }
+//             else {
+//                 $("#toTop").fadeOut(1000);
+//             }
+//         });
+//         $("#toTop").click(function () {
+//             $('body,html').animate({ scrollTop: 0 }, 1000);
+//             return false;
+//         });
+//     });
+// });
 </script>

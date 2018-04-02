@@ -30,7 +30,7 @@
           {{ computer_problem_form | as_bootstrap }}
 
           <div class="form-actions pull-right">
-            <button type="submit" class="btn btn-default" style="width: 80px">提交</button>
+            <button id="submit" type="submit" class="btn btn-default" style="width: 80px">提交</button>
           </div>
 
         </form>
@@ -39,5 +39,16 @@
   </div>
 
 </div>
+
+<script charset="utf-8">
+  // 下拉框 Read Only 但可传值
+  $(document).ready(function() {
+    $("#id_computer").attr("disabled", true)
+
+    $("#submit").click(function() {
+      $("#id_computer").attr("disabled", false)
+    })
+  })
+</script>
 
 {% endblock %}

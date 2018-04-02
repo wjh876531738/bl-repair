@@ -48,6 +48,7 @@ def about(request):
 # 报障表单的提交处理
 def new(request):
     if request.method == 'POST':
+        print(request.POST)
         computer_problem_form = ComputerProblemFrom(request.POST)
 
         # Validate form data
@@ -90,8 +91,6 @@ def new(request):
                 problem_situation=problem_situation,
                 problem_status=0)
 
-            computer_problem_form = ComputerProblemFrom()
-
             # Send email to the reminder
             remind = Remind.objects.get(id=1)
 
@@ -103,32 +102,37 @@ def new(request):
                         COMPUTER_PROBLEM_SITUATION_CHOICES[int(problem_situation)][1],
                         problem_desc,
                         )
-                send(remind.remind_email, msg)
+                # send(remind.remind_email, msg)
 
-            return render(request, 'report/new.html', {
-                'computer_problem_form': computer_problem_form,
-                'msg': '谢谢您的上报, 我们会尽快维修.'})
+            return render_form_with_param(request, msg= '谢谢您的上报，我们会尽快维修')
         else:
-            computer_problem_form = ComputerProblemFrom()
-            return render(request, 'report/new.html', {
-                'msg': '输入错误, 请重新输入.',
-                'computer_problem_form': computer_problem_form})
+            return render_form_with_param(request, msg= '输入错误，请重新输入')
     else:
-        if 'computer_class' in request.GET and 'computer_no' in request.GET:
-            computer = Computer.objects.filter(
-                    computer_class=request.GET.get('computer_class'),
-                    computer_no=request.GET.get('computer_no'),
-                    )
-            if computer:
-                computer_problem_form = ComputerProblemFrom({
-                        'computer': computer.first().id,
-                        'problem_type': 0,
-                        'problem_situation': 0,
-                    })
-            else:
-                computer_problem_form = ComputerProblemFrom()
+        return render_form_with_param(request)
+
+
+def render_form_with_param(request, msg=None):
+    if 'computer_class' in request.GET and 'computer_no' in request.GET:
+        computer = Computer.objects.filter(
+                computer_class=request.GET.get('computer_class'),
+                computer_no=request.GET.get('computer_no'),
+                )
+        if computer:
+            computer_problem_form = ComputerProblemFrom({
+                    'computer': computer.first().id,
+                    'problem_type': 0,
+                    'problem_situation': 0,
+                })
         else:
             computer_problem_form = ComputerProblemFrom()
+    else:
+        computer_problem_form = ComputerProblemFrom()
+
+    if msg:
+        return render(request, 'report/new.html', {
+            'msg': msg,
+            'computer_problem_form': computer_problem_form})
+    else:
         return render(request, 'report/new.html',
                 {'computer_problem_form': computer_problem_form})
 

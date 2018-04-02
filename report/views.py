@@ -31,6 +31,7 @@ import os
 import zipfile
 import time
 from .mailer import send
+from PIL import Image, ImageDraw, ImageFont
 
 
 # 报障记录
@@ -139,7 +140,7 @@ def generate_qrcode(request):
     if not os.path.exists(os.path.join(BASE_DIR, 'media/qrcode/cache')):
         os.mkdir(os.path.join(BASE_DIR, 'media/qrcode/cache'))
 
-    server_host = 'http://localhost'
+    server_host = 'http://www.fsociety.ink/repair'
 
     # Validate params
     # 1. 根据指定电脑生成一张二维码
@@ -157,8 +158,25 @@ def generate_qrcode(request):
                 img = qrcode.make(
                         '%s/report/new?computer_class=%s&computer_no=%s' % (
                             server_host, computer.computer_class, computer.computer_no))
+
+                # 添加文字到二维码当中
+                img_back = Image.new('RGB', (450, 550), 'white')
+                img_white = Image.new('RGB', (450, 100), "white")
+                img_x, img_y = img_white.size
+
+                # Add text to imgage
+                ttfont = ImageFont.truetype(os.path.join(BASE_DIR, 'media/font.ttf'), int(img_y/3))
+                draw = ImageDraw.Draw(img_white)
+
+                text = "%s-%s" % (computer.computer_class, computer.computer_no)
+                draw.text((img_x/2-len(text)*9, (img_y/3)-30), text, (0, 0, 0), ttfont)
+                draw.text((img_x/2-60, (img_y*2/3)-20), "扫我报障", (0, 0, 0), ttfont)
+
+                img_back.paste(img, (0, 0))
+                img_back.paste(img_white, (0, 450))
+
                 with open(os.path.join(BASE_DIR, 'media/qrcode', filename), 'wb+') as f:
-                    img.save(f)
+                    img_back.save(f)
 
             # Marked! 不能通过 with 打开文件，否则 FileResponse 会抛出 ValueError: read of closed file
             f = open(os.path.join(BASE_DIR, 'media/qrcode', filename), 'rb')
@@ -193,8 +211,25 @@ def generate_qrcode(request):
                         img = qrcode.make(
                                 '%s/report/new?computer_class=%s&computer_no=%s' % (
                                     server_host, computer.computer_class, computer.computer_no))
+
+                        # 添加文字到二维码当中
+                        img_back = Image.new('RGB', (450, 550), 'white')
+                        img_white = Image.new('RGB', (450, 100), "white")
+                        img_x, img_y = img_white.size
+
+                        # Add text to imgage
+                        ttfont = ImageFont.truetype(os.path.join(BASE_DIR, 'media/font.ttf'), int(img_y/3))
+                        draw = ImageDraw.Draw(img_white)
+
+                        text = "%s-%s" % (computer.computer_class, computer.computer_no)
+                        draw.text((img_x/2-len(text)*9, (img_y/3)-30), text, (0, 0, 0), ttfont)
+                        draw.text((img_x/2-60, (img_y*2/3)-20), "扫我报障", (0, 0, 0), ttfont)
+
+                        img_back.paste(img, (0, 0))
+                        img_back.paste(img_white, (0, 450))
+
                         with open(os.path.join(BASE_DIR, 'media/qrcode', filename), 'wb+') as f:
-                            img.save(f)
+                            img_back.save(f)
 
                     # 将二维码放进压缩文件包
                     zip_f.write(os.path.join(BASE_DIR, 'media/qrcode', filename), filename)

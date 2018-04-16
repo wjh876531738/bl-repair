@@ -5,5 +5,5 @@
 *.pid
 *.svn
 *.out
-/media/*
+/media/qrcode/*
 /collected_static

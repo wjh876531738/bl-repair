@@ -4,7 +4,7 @@ COMPUTER_PROBLEM_TYPE_CHOICES = (
     (0, '显示器'), (1, '主机'), (2, '网络'), (3, '键鼠'), (4, '其他'))
 COMPUTER_PROBLEM_SITUATION_CHOICES = (
     (0, '一般'), (1, '紧急'), (2, '严重'))
-COMPUTER_PROBLEM_STATUS_CHOICES = ((0, '刚报修'), (1, '开始维修'), (2, '送修'), (3, '已修好'))
+COMPUTER_PROBLEM_STATUS_CHOICES = ((0, '刚报修'), (1, '已修好'), (2, '送修'), (3, '误报'))
 
 
 # 报障提交者

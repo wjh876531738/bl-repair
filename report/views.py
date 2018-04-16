@@ -274,7 +274,7 @@ def generate_qrcode(request):
 
 # Computer Problem List, Create
 class ComputerProblemList(generics.ListCreateAPIView):
-    queryset = ComputerProblem.objects.all().order_by('-problem_situation', 'problem_status', '-report_time')
+    queryset = ComputerProblem.objects.all().order_by('problem_status', '-problem_situation', '-report_time')
     serializer_class = ComputerProblemSerializer
     filter_fields = (
             'computer', 'problem_type', 'problem_desc',

@@ -1,18 +1,20 @@
 from rest_framework import serializers
 from .models import ComputerProblem, Computer, Reporter, Remind
 
-class ComputerProblemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ComputerProblem
-        fields = ('id', 'problem_type', 'problem_desc', 'problem_situation', 'problem_status', 'report_time')
-        # fields = '__all__'
-
-
 class ComputerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Computer
         # fields = ('id', 'computer_class', 'computer_no', 'computer_ip', 'report_count')
         fields = '__all__'
+
+
+class ComputerProblemSerializer(serializers.ModelSerializer):
+    computer = ComputerSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = ComputerProblem
+        fields = ('id', 'computer', 'problem_type', 'problem_desc', 'problem_situation', 'problem_status', 'report_time')
+        # fields = '__all__'
 
 
 class ComputerClassSerializer(serializers.Serializer):

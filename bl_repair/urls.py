@@ -65,6 +65,6 @@ urlpatterns = [
     # url(r'^api/v1/', include(router.urls)),
 
     # Vue
-    url(r'^vue$', TemplateView.as_view(template_name='index.html')),
+    url(r'^zhbit/admin$', TemplateView.as_view(template_name='index.html')),
 
 ]

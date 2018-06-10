@@ -8,4 +8,4 @@
 /media/qrcode/*
 /collected_static
 
-__pycache__/*
+/report/__pycache__/*

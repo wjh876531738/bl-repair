@@ -283,8 +283,8 @@ class ComputerProblemList(generics.ListCreateAPIView):
         'problem_situation', 'problem_status'
     )
     ordering_fields = (
-        'computer', 'problem_type', 'problem_desc',
-        'problem_situation', 'problem_status'
+        'id', 'computer', 'problem_type', 'problem_desc',
+        'problem_situation', 'problem_status', 'report_time'
     )
 
     def list(self, request):

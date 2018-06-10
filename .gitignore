@@ -7,3 +7,5 @@
 *.out
 /media/qrcode/*
 /collected_static
+
+__pycache__/*

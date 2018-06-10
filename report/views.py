@@ -101,7 +101,7 @@ def new(request):
                         COMPUTER_PROBLEM_SITUATION_CHOICES[int(problem_situation)][1],
                         problem_desc,
                         )
-                # send(remind.remind_email, msg)
+                send(remind.remind_email, msg)
 
             return render_form_with_param(request, msg= '谢谢您的上报，我们会尽快维修')
         else:

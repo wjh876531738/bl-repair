@@ -6,7 +6,7 @@ from email.header import Header
 def send_mail(receivers, send_from, send_to, subject, content, content_type='plain'):
     mail_host = 'smtp.qq.com'
     mail_user = '876531738@qq.com'
-    mail_pass = 'tespftjfkwwlbdbd'
+    mail_pass = ''
 
     sender = '876531738@qq.com'
 
@@ -17,7 +17,7 @@ def send_mail(receivers, send_from, send_to, subject, content, content_type='pla
     message['Subject'] = Header(subject, 'utf-8')
 
     try:
-        smtpObj = smtplib.SMTP('localhost')
+        smtpObj = smtplib.SMTP()
         smtpObj.connect(mail_host, 587)
         smtpObj.starttls()
         smtpObj.login(mail_user, mail_pass)

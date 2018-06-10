@@ -26,7 +26,7 @@ SECRET_KEY = '$-8@na*ey3q5+p1mq9zl+elv2w3a$@3i5=p)cla5f)&#=s-)yi'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+False
 
 # Application definition
 
@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bl_repair',
         'USER': 'root',
-        'PASSWORD': 'duoshi',
+        'PASSWORD': 'python',
         'HOST': 'localhost',
         'PORT': '3306',
     }

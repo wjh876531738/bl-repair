@@ -16,6 +16,7 @@ from .models import COMPUTER_PROBLEM_TYPE_CHOICES
 from .models import COMPUTER_PROBLEM_SITUATION_CHOICES
 
 from rest_framework import generics
+from rest_framework import filters
 from rest_framework.response import Response
 
 from django_filters.rest_framework import DjangoFilterBackend
@@ -276,15 +277,24 @@ def generate_qrcode(request):
 class ComputerProblemList(generics.ListCreateAPIView):
     queryset = ComputerProblem.objects.all().order_by('problem_status', '-problem_situation', '-report_time')
     serializer_class = ComputerProblemSerializer
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
     filter_fields = (
-            'computer', 'problem_type', 'problem_desc',
-            'problem_situation', 'problem_status'
-            )
+        'computer', 'problem_type', 'problem_desc',
+        'problem_situation', 'problem_status'
+    )
+    ordering_fields = (
+        'computer', 'problem_type', 'problem_desc',
+        'problem_situation', 'problem_status'
+    )
 
     def list(self, request):
         queryset = self.filter_queryset(self.get_queryset())
-
         page = self.paginate_queryset(queryset)
+
+        # Update the created time
+        for i in page:
+            i.updated_at = i.report_time.astimezone().strftime('%Y-%m-%d %H:%M')
+
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)

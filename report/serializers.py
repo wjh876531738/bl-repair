@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from .models import ComputerProblem, Computer, Reporter, Remind
 
+
 class ComputerSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Computer
-        # fields = ('id', 'computer_class', 'computer_no', 'computer_ip', 'report_count')
         fields = '__all__'
 
 
@@ -13,7 +14,15 @@ class ComputerProblemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ComputerProblem
-        fields = ('id', 'computer', 'problem_type', 'problem_desc', 'problem_situation', 'problem_status', 'report_time')
+        fields = (
+            'id',
+            'computer',
+            'problem_type',
+            'problem_desc',
+            'problem_situation',
+            'problem_status',
+            'report_time'
+        )
         # fields = '__all__'
 
 
@@ -23,6 +32,7 @@ class ComputerClassSerializer(serializers.Serializer):
 
 class ReporterSerializer(serializers.ModelSerializer):
     computer_problems = ComputerProblemSerializer(many=True, read_only=True)
+
     class Meta:
         model = Reporter
         # fields = ('reporter_ip', 'computer_problems')
@@ -30,6 +40,7 @@ class ReporterSerializer(serializers.ModelSerializer):
 
 
 class RemindSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Remind
         ordering = 'id'
